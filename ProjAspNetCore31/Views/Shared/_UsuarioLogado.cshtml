@@ -1,0 +1,21 @@
+﻿@inject Microsoft.AspNetCore.Identity.SignInManager<ProjAspNetCore31.Models.Infra.UsuarioDaAplicacao > SignInManager
+@inject Microsoft.AspNetCore.Identity.UserManager<ProjAspNetCore31.Models.Infra.UsuarioDaAplicacao > UserManager
+
+<div class="row" style="text-align:right;">
+    <div class="col-6"></div>
+    <div class="col-6">
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <div>
+                Olá @UserManager.GetUserName(User), seja bem-vindo(a) /
+                @Html.ActionLink("Logout", "Sair", "Infra", new { area = "" })
+            </div>
+        }
+        else
+        {
+            <a class="nav-item nav-link" asp-area="" asp-controller="Infra" asp-action="Acessar">
+                Informar usuário/senha para acessar
+            </a>
+        }
+    </div>
+</div>
