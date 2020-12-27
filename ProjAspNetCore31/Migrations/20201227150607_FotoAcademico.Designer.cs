@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProjAspNetCore31.Data;
 
 namespace ProjAspNetCore31.Migrations
 {
     [DbContext(typeof(IESContext))]
-    partial class IESContextModelSnapshot : ModelSnapshot
+    [Migration("20201227150607_FotoAcademico")]
+    partial class FotoAcademico
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
