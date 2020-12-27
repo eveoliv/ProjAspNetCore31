@@ -15,7 +15,7 @@ namespace ProjAspNetCore31.Data.DAL.Cadastros
         {
             _context = context;
         }
-        public IQueryable<Departamento> ObterDepartamentosClassificadasPorNome()
+        public IQueryable<Departamento> ObterDepartamentosClassificadosPorNome()
         {
             return _context.Departamentos.Include(i => i.Instituicao).OrderBy(d => d.Nome);
         }
@@ -45,6 +45,12 @@ namespace ProjAspNetCore31.Data.DAL.Cadastros
             _context.Departamentos.Remove(departamento);
             await _context.SaveChangesAsync();
             return departamento;
+        }
+
+        public IQueryable<Departamento> ObterDepartamentosPorInstituicao(long instituicaoID)
+        {
+            var departamentos = _context.Departamentos.Where(d => d.InstituicaoID == instituicaoID).OrderBy(d => d.Nome);
+            return departamentos;
         }
     }
 }

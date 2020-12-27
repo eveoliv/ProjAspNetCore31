@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using ProjAspNetCore31.Models.Infra;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Modelo.Docente;
 
 namespace ProjAspNetCore31.Data
 {
@@ -16,6 +17,7 @@ namespace ProjAspNetCore31.Data
 
         public DbSet<Curso> Cursos { get; set; }
         public DbSet<Academico> Academicos { get; set; }
+        public DbSet<Professor> Professores { get; set; }
         public DbSet<Disciplina> Disciplinas { get; set; }
         public DbSet<Instituicao> Instituicoes { get; set; }
         public DbSet<Departamento> Departamentos { get; set; }
@@ -25,6 +27,7 @@ namespace ProjAspNetCore31.Data
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<Curso>().ToTable("Curso");
             modelBuilder.Entity<Academico>().ToTable("Academico");
+            modelBuilder.Entity<Professor>().ToTable("Professor");
             modelBuilder.Entity<Disciplina>().ToTable("Disciplina");
             modelBuilder.Entity<Instituicao>().ToTable("Instituicao");
             modelBuilder.Entity<Departamento>().ToTable("Departamento");
@@ -33,10 +36,27 @@ namespace ProjAspNetCore31.Data
                 .HasKey(cd => new { cd.CursoID, cd.DisciplinaID });
             
             modelBuilder.Entity<CursoDisciplina>()
-                .HasOne(c => c.Curso).WithMany(cd => cd.CursosDisciplinas).HasForeignKey(c => c.CursoID);
+                .HasOne(c => c.Curso)
+                .WithMany(cd => cd.CursosDisciplinas)
+                .HasForeignKey(c => c.CursoID);
 
             modelBuilder.Entity<CursoDisciplina>()
-                .HasOne(d => d.Disciplina).WithMany(cd => cd.CursosDisciplinas).HasForeignKey(d => d.DisciplinaID);
+                .HasOne(d => d.Disciplina)
+                .WithMany(cd => cd.CursosDisciplinas)
+                .HasForeignKey(d => d.DisciplinaID);
+
+            modelBuilder.Entity<CursoProfessor>()
+                .HasKey(c => new { c.CursoID, c.ProfessorID });
+
+            modelBuilder.Entity<CursoProfessor>()
+                .HasOne(c => c.Curso)
+                .WithMany(p => p.CursosProfessores)
+                .HasForeignKey(c => c.CursoID);
+
+            modelBuilder.Entity<CursoProfessor>()
+                .HasOne(p => p.Professor)
+                .WithMany(c => c.CursosProfessores)
+                .HasForeignKey(p => p.ProfessorID);
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
